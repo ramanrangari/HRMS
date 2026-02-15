@@ -72,7 +72,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'hrmslite.hrmslite.wsgi.application'
+WSGI_APPLICATION = 'hrmslite.wsgi.application'
 
 
 # Database
