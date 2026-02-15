@@ -88,7 +88,7 @@ class AttendancePageView(APIView):
 
     def post(self, request):
         Attendance.objects.create(
-            employee_id=request.data.get("employee"),
+            # employee_id=request.data.get("employee"),
             date=request.data.get("date"),
             status=request.data.get("status")
         )
