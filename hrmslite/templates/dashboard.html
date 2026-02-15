@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h3>Dashboard</h3>
+    <span class="text-muted">HRMS Overview</span>
+</div>
+
+<!-- Summary Cards -->
+<div class="row g-4">
+
+    <!-- Total Employees -->
+    <div class="col-md-4">
+        <div class="card shadow-sm border-0">
+            <div class="card-body text-center">
+                <h6 class="text-muted">Total Employees</h6>
+                <h2 class="fw-bold mt-2">
+                    {{ total_employees|default:0 }}
+                </h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- Today Present -->
+    <div class="col-md-4">
+        <div class="card shadow-sm border-0">
+            <div class="card-body text-center">
+                <h6 class="text-muted">Today Present</h6>
+                <h2 class="fw-bold text-success mt-2">
+                    {{ today_present|default:0 }}
+                </h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- Today Absent -->
+    <div class="col-md-4">
+        <div class="card shadow-sm border-0">
+            <div class="card-body text-center">
+                <h6 class="text-muted">Today Absent</h6>
+                <h2 class="fw-bold text-danger mt-2">
+                    {{ today_absent|default:0 }}
+                </h2>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Additional Section -->
+<div class="card shadow-sm mt-5 border-0">
+    <div class="card-body">
+        <h5 class="card-title mb-3">System Summary</h5>
+
+        {% if total_employees == 0 %}
+            <div class="alert alert-info">
+                No employees added yet. Please add employees to start tracking attendance.
+            </div>
+        {% else %}
+            <p class="mb-1">
+                <strong>Total Employees:</strong> {{ total_employees }}
+            </p>
+            <p class="mb-1">
+                <strong>Present Today:</strong> {{ today_present }}
+            </p>
+            <p class="mb-0">
+                <strong>Absent Today:</strong> {{ today_absent }}
+            </p>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

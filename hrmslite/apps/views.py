@@ -101,3 +101,20 @@ class AttendancePageView(APIView):
             "attendances": attendances
         })
 
+
+class DashboardView(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = "dashboard.html"
+
+    def get(self, request):
+        today = now().date()
+        total_employees = Employee.objects.count()
+        today_present = Attendance.objects.filter(
+            date=today, status="PRESENT"
+        ).count()
+
+        return Response({
+            "total_employees": total_employees,
+            "today_present": today_present,
+            "today_absent": total_employees - today_present
+        })
