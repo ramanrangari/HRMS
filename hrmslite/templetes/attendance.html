@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h3>Attendance Management</h3>
+</div>
+
+<!-- Alert Placeholder -->
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+  {% endfor %}
+{% endif %}
+
+<!-- Attendance Form -->
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <h5 class="card-title mb-3">Mark Attendance</h5>
+
+        <form method="post" class="row g-3">
+            {% csrf_token %}
+
+            <div class="col-md-4">
+                <label class="form-label">Employee</label>
+                <select name="employee" class="form-select" required>
+                    <option value="">Select Employee</option>
+                    {% for emp in employees %}
+                        <option value="{{ emp.id }}">
+                            {{ emp.full_name }} ({{ emp.employee_id }})
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-md-3">
+                <label class="form-label">Date</label>
+                <input type="date" name="date" class="form-control" required>
+            </div>
+
+            <div class="col-md-3">
+                <label class="form-label">Status</label>
+                <select name="status" class="form-select" required>
+                    <option value="PRESENT">Present</option>
+                    <option value="ABSENT">Absent</option>
+                </select>
+            </div>
+
+            <div class="col-md-2 d-flex align-items-end">
+                <button type="submit" class="btn btn-success w-100">
+                    Mark
+                </button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<!-- Attendance Records Table -->
+<div class="card shadow-sm">
+    <div class="card-body">
+        <h5 class="card-title mb-3">Attendance Records</h5>
+
+        {% if attendances %}
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Employee ID</th>
+                        <th>Name</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for record in attendances %}
+                    <tr>
+                        <td>{{ record.employee.employee_id }}</td>
+                        <td>{{ record.employee.full_name }}</td>
+                        <td>{{ record.date }}</td>
+                        <td>
+                            {% if record.status == "PRESENT" %}
+                                <span class="badge bg-success">Present</span>
+                            {% else %}
+                                <span class="badge bg-danger">Absent</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+            <div class="alert alert-info">
+                No attendance records found.
+            </div>
+        {% endif %}
+
+    </div>
+</div>
+
+{% endblock %}

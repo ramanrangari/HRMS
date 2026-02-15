@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h3>Employees</h3>
+
+<form method="post">
+    {% csrf_token %}
+    <input type="text" name="employee_id" placeholder="Employee ID">
+    <input type="text" name="full_name" placeholder="Full Name">
+    <input type="email" name="email" placeholder="Email">
+    <input type="text" name="department" placeholder="Department">
+    <button type="submit">Add</button>
+</form>
+
+<hr>
+
+<table class="table">
+<tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Dept</th>
+</tr>
+
+{% for emp in employees %}
+<tr>
+    <td>{{ emp.employee_id }}</td>
+    <td>{{ emp.full_name }}</td>
+    <td>{{ emp.email }}</td>
+    <td>{{ emp.department }}</td>
+</tr>
+{% empty %}
+<tr>
+    <td colspan="4">No employees found</td>
+</tr>
+{% endfor %}
+
+</table>
+
+{% endblock %}
