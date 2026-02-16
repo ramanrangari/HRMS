@@ -118,3 +118,5 @@ class DashboardView(APIView):
             "today_present": today_present,
             "today_absent": total_employees - today_present
         })
+
+
