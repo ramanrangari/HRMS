@@ -52,7 +52,7 @@ from rest_framework.response import Response
 from rest_framework.renderers import TemplateHTMLRenderer
 from .models import Employee, Attendance
 from django.utils.timezone import now
-from datetime import date
+
 
 class EmployeePageView(APIView):
     renderer_classes = [TemplateHTMLRenderer]
@@ -79,7 +79,8 @@ class AttendancePageView(APIView):
 
     def get(self, request):
         employees = Employee.objects.all()
-        attendances = Attendance.objects.get(date = date.today())
+        attendances = Attendance.objects.all().order_by("-date")
+
         return Response({
             "employees": employees,
             "attendances": attendances
