@@ -51,8 +51,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.renderers import TemplateHTMLRenderer
 from .models import Employee, Attendance
-from django.utils.timezone import now
-
+# from django.utils.timezone import now
+from datetime import datetime
 
 class EmployeePageView(APIView):
     renderer_classes = [TemplateHTMLRenderer]
@@ -107,7 +107,7 @@ class DashboardView(APIView):
     template_name = "dashboard.html"
 
     def get(self, request):
-        today = now().date()
+        today = datetime.now().date()
         total_employees = Employee.objects.count()
         today_present = Attendance.objects.filter(
             date=today, status="PRESENT"
